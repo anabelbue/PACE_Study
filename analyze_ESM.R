@@ -1,4 +1,5 @@
 library(tidyverse)
+devtools::install_github("Sciurus365/fitlandr") 
 library(fitlandr)
 
 
