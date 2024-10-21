@@ -5,6 +5,22 @@ MVKE <- function(d, h = 0.2, kernel = c("exp", "Gaussian")) {
   rowProds <- function(x) {
     apply(x, 1, prod)  # Compute row-wise products
   }
+
+K_gaussian_mat <- function(mat, x, h) {
+  dim <- length(x)
+  mat <- mat - matrix(rep(x, nrow(mat)), ncol = dim, byrow = TRUE)
+  mat <- stats::dnorm(mat / h)
+  values <- 1 / (h^dim) * Rfast::rowprods(mat)
+  return(values)
+}
+
+K_exp_mat <- function(mat, x, h) {
+  dim <- length(x)
+  mat <- mat - matrix(rep(x, nrow(mat)), ncol = dim, byrow = TRUE)
+  mat <- exp(mat / h)
+  values <- 1 / (h^dim) * Rfast::rowprods(mat)
+  return(values)
+}
   if (is.data.frame(d)) d <- as.matrix(d)
   if (!is.matrix(d)) stop("`d` should be a data.frame or a matrix.")
 
