@@ -49,6 +49,4 @@ analyze_ESM <- function(dat, var, min_diff, max_diff) {
   attractors <- paste(output$x, sep =",")
 
   return(attractors)
-
-
 }
