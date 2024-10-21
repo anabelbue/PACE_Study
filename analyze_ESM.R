@@ -1,55 +1,53 @@
-
-
-analyze_ESM <- function(dat, var, min_diff, max_diff) {
-  library(tidyverse)
-
-  dat <- dat[, c("created", var)]
+MVKE <- function(d, h = 0.2, kernel = c("exp", "Gaussian")) {
+  rowProds <- function(x) {
+    apply(x, 1, prod)
+  }
   
-  # create common name 
-  names(dat) <- c("created", "var")
+  if (is.data.frame(d)) d <- as.matrix(d)
+  if (!is.matrix(d)) stop("`d` should be a data.frame or a matrix.")
   
-  # calculte time difference to previous time point 
-  dat <- dat %>% mutate(
-    created_lag = lag(created),
-    var_lag = lag(var),
-    delta = as.numeric(difftime(created, created_lag, units = "mins"))
+  d <- stats::na.omit(d)
+  dim <- ncol(d)
+  
+  temp_d <- d[1:(nrow(d) - 1), , drop = FALSE]
+  temp_diff <- diff(d)
+  temp_norm <- apply(temp_diff, MARGIN = 1, FUN = function(x) norm(x, "2"))
+  temp_diff_tcrossprod <- apply(temp_diff,
+                                MARGIN = 1,
+                                FUN = function(x) {
+                                  tcrossprod(x, x)
+                                }, simplify = FALSE
   )
+  kernel <- kernel[1]
+  if (kernel == "Gaussian") {
+    K <- K_gaussian_mat
+  } else if (kernel == "exp") {
+    K <- K_exp_mat
+  } else {
+    stop('`kernel` must be one of "Gaussian" or "exp".')
+  }
   
-  # Flag in which rows the time difference is out of bounds 
-  # Create a dataframe with test data
-  dat <- dat %>%
-    mutate(new_row_needed = ifelse(delta < min_diff | delta > max_diff, TRUE, FALSE))  
+  force(h)
   
-  # Step 2: Add a row with NA above flagged rows
-  dat <- dat %>%
-    group_by(row_number()) %>%
-    do({
-      if (.$new_row_needed & !is.na(.$delta)) {  # Handle NA in delta properly
-        # Create a row of NA values and bind it before the current row
-        bind_rows(tibble(created = NA, var = NA, created_lag = NA, var_lag = NA, delta = NA), .)
-      } else {
-        .
-      }
-    }) %>%
-    ungroup() %>%
-    dplyr::select(-new_row_needed)  # Remove the flag column
-  
-  
-  # Count the number of non-missing pars to get N
-  N <- dat %>%
-    filter(!is.na(var) & !is.na(var_lag)) %>%  # Filter for non-missing pairs
-    summarise(non_missing_pairs = n()) %>%            # Count the remaining valid pairs
-    pull()
-  
-  
-  # Analyze the data 
-  lims <- range(dat$var, na.rm = TRUE)  # Calculate limits based on data range
-  mod <- fit_2d_ld(dat, "var", lims = lims, n = N)
-  output <- summary(mod)
-  
-  # x entails the location of the attractor(s)
-  output$x <- round(output$x)
-  attractors <- paste(output$x, sep =",")
-  return(attractors)
+  function(x) {
+    if (length(x) != dim) stop("Input of wrong dimension.")
+    
+    temp_kernel_term_upper <- K_gaussian_mat(temp_d, x, h = h)
+    temp_kernel_term_lower <- K_gaussian_mat(d, x, h = h)
+    
+    # Simplify the purrr::map_dbl call for debugging
+    Useq <- numeric(length(x))
+    Useq[1] <- 0
+    for (i in 2:length(x)) {
+      Useq[i] <- Useq[i - 1] - stats::integrate(function(x) purrr::map_dbl(x, function(xx) {
+        1  # Replace MVKEresult(xx)$mu with 1 temporarily
+      }), x[i - 1], x[i], subdivisions = 100L, rel.tol = .Machine$double.eps^0.25, abs.tol = .Machine$double.eps^0.25)$value
+    }
+    
+    return(list(
+      mu = colSums(temp_kernel_term_upper * temp_diff) / sum(temp_kernel_term_lower),
+      a = mapply(`*`, temp_kernel_term_upper, temp_diff_tcrossprod, SIMPLIFY = FALSE) %>% 
+        Reduce(`+`, .) / sum(temp_kernel_term_lower)
+    ))
+  }
 }
-
