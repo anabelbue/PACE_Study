@@ -49,9 +49,8 @@ MVKE <- function(d, h = 0.2, kernel = c("exp", "Gaussian")) {
   }
   
   force(h)
-  
-  # The returned function
-  function(x) {
+ # The returned function (inner function)
+  return(function(x) {
     if (length(x) != dim) stop("Input of wrong dimension.")
     
     temp_kernel_term_upper <- K(temp_d, x, h = h)
@@ -71,5 +70,5 @@ MVKE <- function(d, h = 0.2, kernel = c("exp", "Gaussian")) {
       a = mapply(`*`, temp_kernel_term_upper, temp_diff_tcrossprod, SIMPLIFY = FALSE) %>% 
         Reduce(`+`, .) / sum(temp_kernel_term_lower)
     ))
-  }
-
+  })  # Correctly close the inner function
+}  # Correctly close the outer MVKE function
