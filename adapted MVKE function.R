@@ -72,3 +72,5 @@ MVKE <- function(d, h = 0.2, kernel = c("exp", "Gaussian")) {
     ))
   }
 }
+}
+                                                
