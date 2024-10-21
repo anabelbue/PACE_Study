@@ -72,4 +72,4 @@ MVKE <- function(d, h = 0.2, kernel = c("exp", "Gaussian")) {
         Reduce(`+`, .) / sum(temp_kernel_term_lower)
     ))
   }
-}
+
