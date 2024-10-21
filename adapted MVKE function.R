@@ -29,50 +29,25 @@ MVKE <- function(d, h = 0.2, kernel = c("exp", "Gaussian")) {
   
   force(h)
   
-  # Debugging and printing output of MVKEresult
   function(x) {
     if (length(x) != dim) stop("Input of wrong dimension.")
     
     temp_kernel_term_upper <- K_gaussian_mat(temp_d, x, h = h)
     temp_kernel_term_lower <- K_gaussian_mat(d, x, h = h)
     
-    # Print the MVKEresult for debugging
-    print("Debugging MVKEresult call:")
-    MVKEresult <- K_gaussian_mat(temp_d, x, h = h)  # Calling the MVKE kernel function
-    print(MVKEresult)  # Print the result of MVKE
-    print(MVKEresult(x))  # Print the MVKE result for input x
-    print(MVKEresult(x)$mu)  # Print the mu component of the result
-    
-    if (any(is.na(temp_kernel_term_upper)) || any(is.nan(temp_kernel_term_upper))) {
-      stop("Kernel term has NA or NaN values.")
+    # Simplify the purrr::map_dbl call for debugging
+    Useq <- numeric(length(x))
+    Useq[1] <- 0
+    for (i in 2:length(x)) {
+      Useq[i] <- Useq[i - 1] - stats::integrate(function(x) purrr::map_dbl(x, function(xx) {
+        1  # Replace MVKEresult(xx)$mu with 1 temporarily
+      }), x[i - 1], x[i], subdivisions = 100L, rel.tol = .Machine$double.eps^0.25, abs.tol = .Machine$double.eps^0.25)$value
     }
     
-    # Perform the calculation
     return(list(
       mu = colSums(temp_kernel_term_upper * temp_diff) / sum(temp_kernel_term_lower),
       a = mapply(`*`, temp_kernel_term_upper, temp_diff_tcrossprod, SIMPLIFY = FALSE) %>% 
         Reduce(`+`, .) / sum(temp_kernel_term_lower)
     ))
   }
-}
-
-K_gaussian_mat <- function(mat, x, h) {
-  dim <- length(x)
-  mat <- mat - matrix(rep(x, nrow(mat)), ncol = dim, byrow = TRUE)
-  mat <- stats::dnorm(mat / h)
-  values <- 1 / (h^dim) * rowProds(mat)  # Use the custom rowProds function
-  return(values)
-}
-
-K_exp_mat <- function(mat, x, h) {
-  dim <- length(x)
-  mat <- mat - matrix(rep(x, nrow(mat)), ncol = dim, byrow = TRUE)
-  mat <- exp(mat / h)
-  values <- 1 / (h^dim) * rowProds(mat)  # Use the custom rowProds function
-  return(values)
-}
-
-# Custom rowProds function to replace Rfast::rowprods
-rowProds <- function(x) {
-  apply(x, 1, prod)  # Compute row-wise products
 }
