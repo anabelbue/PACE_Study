@@ -1,8 +1,29 @@
 MVKE <- function(d, h = 0.2, kernel = c("exp", "Gaussian")) {
-  rowProds <- function(x) {
-    apply(x, 1, prod)
-  }
-  
+ # Custom rowProds function to replace Rfast::rowprods
+rowProds <- function(x) {
+  apply(x, 1, prod)  # Compute row-wise products
+}
+
+# K_gaussian_mat function
+K_gaussian_mat <- function(mat, x, h) {
+  dim <- length(x)
+  mat <- mat - matrix(rep(x, nrow(mat)), ncol = dim, byrow = TRUE)
+  mat <- stats::dnorm(mat / h)
+  values <- 1 / (h^dim) * rowProds(mat)  # Use the custom rowProds function
+  return(values)
+}
+
+# K_exp_mat function
+K_exp_mat <- function(mat, x, h) {
+  dim <- length(x)
+  mat <- mat - matrix(rep(x, nrow(mat)), ncol = dim, byrow = TRUE)
+  mat <- exp(mat / h)
+  values <- 1 / (h^dim) * rowProds(mat)  # Use the custom rowProds function
+  return(values)
+}
+
+# MVKE function using either K_gaussian_mat or K_exp_mat
+MVKE <- function(d, h = 0.2, kernel = c("exp", "Gaussian")) {
   if (is.data.frame(d)) d <- as.matrix(d)
   if (!is.matrix(d)) stop("`d` should be a data.frame or a matrix.")
   
@@ -32,15 +53,15 @@ MVKE <- function(d, h = 0.2, kernel = c("exp", "Gaussian")) {
   function(x) {
     if (length(x) != dim) stop("Input of wrong dimension.")
     
-    temp_kernel_term_upper <- K_gaussian_mat(temp_d, x, h = h)
-    temp_kernel_term_lower <- K_gaussian_mat(d, x, h = h)
+    temp_kernel_term_upper <- K(temp_d, x, h = h)
+    temp_kernel_term_lower <- K(d, x, h = h)
     
-    # Simplify the purrr::map_dbl call for debugging
+    # Debugging the MVKEresult(xx)$mu issue
     Useq <- numeric(length(x))
     Useq[1] <- 0
     for (i in 2:length(x)) {
       Useq[i] <- Useq[i - 1] - stats::integrate(function(x) purrr::map_dbl(x, function(xx) {
-        1  # Replace MVKEresult(xx)$mu with 1 temporarily
+        1  # Temporarily use a simple value to check if error persists
       }), x[i - 1], x[i], subdivisions = 100L, rel.tol = .Machine$double.eps^0.25, abs.tol = .Machine$double.eps^0.25)$value
     }
     
