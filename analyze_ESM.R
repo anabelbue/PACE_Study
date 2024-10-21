@@ -1,0 +1,56 @@
+library(tidyverse)
+library(fitlandr)
+
+
+analyze_ESM <- function(dat, var, min_diff, max_diff) {
+  dat <- dat[, c("created", var)]
+  
+  # create common name 
+  names(dat) <- c("created", "var")
+  
+  # calculte time difference to previous time point 
+  dat <- dat %>% mutate(
+    created_lag = lag(created),
+    var_lag = lag(var),
+    delta = as.numeric(difftime(created, created_lag, units = "mins"))
+  )
+  
+  # Flag in which rows the time difference is out of bounds 
+  # Create a dataframe with test data
+  dat <- dat %>%
+    mutate(new_row_needed = ifelse(delta < min_diff | delta > max_diff, TRUE, FALSE))  
+  
+  # Step 2: Add a row with NA above flagged rows
+  dat <- dat %>%
+    group_by(row_number()) %>%
+    do({
+      if (.$new_row_needed & !is.na(.$delta)) {  # Handle NA in delta properly
+        # Create a row of NA values and bind it before the current row
+        bind_rows(tibble(created = NA, var = NA, created_lag = NA, var_lag = NA, delta = NA), .)
+      } else {
+        .
+      }
+    }) %>%
+    ungroup() %>%
+    dplyr::select(-new_row_needed)  # Remove the flag column
+  
+  
+  # Count the number of non-missing pars to get N
+  N <- dat %>%
+    filter(!is.na(var) & !is.na(var_lag)) %>%  # Filter for non-missing pairs
+    summarise(non_missing_pairs = n()) %>%            # Count the remaining valid pairs
+    pull()
+  
+  
+  # Analyze the data 
+  mod <- fit_2d_ld(dat, "var", n = N)
+  ?fit_2d_ld
+  plot(mod)
+  output <- summary(mod)
+  
+  # x entails the location of the attractor(s)
+  output$x <- round(output$x)
+  attractors <- paste(output$x, sep =",")
+  return(attractors)
+}
+
