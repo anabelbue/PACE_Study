@@ -57,6 +57,12 @@ MVKE <- function(d, h = 0.2, kernel = c("exp", "Gaussian")) {
     temp_kernel_term_lower <- K(d, x, h = h)
     
     # Debugging the MVKEresult(xx)$mu issue
+    # Inside the function being returned by MVKE
+print("Debugging MVKEresult")
+print(MVKEresult)  # Print the MVKEresult function itself
+print(MVKEresult(x))  # Print the result for the input x
+print(MVKEresult(x)$mu)  # Print the 'mu' component of the result, if it exists
+
     Useq <- numeric(length(x))
     Useq[1] <- 0
     for (i in 2:length(x)) {
