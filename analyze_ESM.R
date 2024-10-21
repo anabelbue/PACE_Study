@@ -2,6 +2,7 @@
 
 analyze_ESM <- function(dat, var, min_diff, max_diff) {
   library(tidyverse)
+  install.packages("devtools")
 devtools::install_github("Sciurus365/fitlandr") 
   library(fitlandr)
 
