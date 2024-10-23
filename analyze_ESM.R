@@ -42,7 +42,7 @@ analyze_ESM <- function(dat, var, min_diff, max_diff) {
   
   # Analyze the data 
    lims <- range(dat$var, na.rm = TRUE)  # Calculate limits based on data range
-  mod <- fit_2d_ld(dat, "var", lims = lims, n = N)
+  mod <- fit_2d_ld(dat, "var", lims = lims, n = N, na_action = "omit_vectors")
   output <- summary(mod)
   
   # x entails the location of the attractor(s)
