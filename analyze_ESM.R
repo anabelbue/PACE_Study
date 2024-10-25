@@ -47,7 +47,7 @@ analyze_ESM <- function(dat, var, min_diff, max_diff) {
   
   # x entails the location of the attractor(s)
   output$x <- round(output$x)
-  attractors <- paste(output$x, sep =",")
+  attractors <- paste(output$x, collapse =",")
 
   return(attractors)
 }
