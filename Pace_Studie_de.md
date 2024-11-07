@@ -1,4 +1,4 @@
-### Vielen Dank für Ihre Teilnahme an der PACE-Studie!
+### Vielen Dank für Ihr Interesse an der PACE-Studie!
 
 Sobald Sie in der Studie angemeldet sind, schicken wir Ihnen alle relevanten Informationen zu der E-Mail-Adresse, die Sie in der Registrierung angegeben haben. Wenn Sie Fragen zur Studie haben, melden Sie sich bitte bei dem [Studienteam](mailto:psy.dynamics@hu-berlin.de). Vielen Dank!
 
