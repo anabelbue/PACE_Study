@@ -20,10 +20,10 @@ Vor Beginn registrieren Sie sich durch Ihre Einwilligung und die Angabe Ihrer E-
 **Teil 3**: Wenn Sie mindestens 100 ESM-Umfragen ausgefüllt haben, erhalten Sie am Folgetag eine Einladung zur **Follow-up-Umfrage**, in der Sie noch einmal den neu entwickelten Fragebogen beantworten, den Sie auch in der Baseline-Umfrage beantwortet haben. Anschließend werden wir Ihnen mitteilen, wie wir Ihre typischen Gedanken-, Gefühls-, und Verhaltensmuster basierend auf dem neuen Fragebogen im Vergleich zu den ESM-Umfragen beschreiben würden. Da diese Beschreibungen häufig voneinander abweichen, werden wir Sie fragen, welche Beschreibung Sie zutreffender finden. Anschließend werden wir Ihnen noch Fragen zur Ihrer Erfahrung mit dem ESM-Teil sowie zu Ihrer Persönlichkeit stellen. 
 
 #### Vergütung
-Die Teilnahmezeit beträgt maximal 8,6 Stunden. Dementsprechend können Sie für Ihre Teilnahme insgesamt bis zu 9 Versuchspersonenstunden (VP-Stunden) erhalten. Zudem erhalten Sie individuelles Feedback basierend auf Ihren Antworten zu den ESM-Umfragen. Zum Beispiel werden wir Ihnen mitteilen, an welchem Ort oder mit welcher Aktivität sie die meiste Zeit verbringen, wann und wo Sie am glücklichsten sind, und wie sich Ihr Stresslevel innerhalb eines Tages oder über eine Woche hinweg verändert. Abschließend umfasst die Vergütung die Chance, einen Multi-Gift Gutschein im Wert von 100 Euro von GoGift zu gewinnen (https://www.global-de.gogift.com/) .
+Die Teilnahmezeit beträgt maximal 8,6 Stunden. Dementsprechend können Sie für Ihre Teilnahme insgesamt bis zu 36 VP-Marken/ 9 VP-Stunden erhalten. Zudem erhalten Sie individuelles Feedback basierend auf Ihren Antworten zu den ESM-Umfragen. Zum Beispiel werden wir Ihnen mitteilen, an welchem Ort oder mit welcher Aktivität sie die meiste Zeit verbringen, wann und wo Sie am glücklichsten sind, und wie sich Ihr Stresslevel innerhalb eines Tages oder über eine Woche hinweg verändert. Abschließend umfasst die Vergütung die Chance, einen Multi-Gift Gutschein im Wert von 100 Euro von GoGift zu gewinnen (https://www.global-de.gogift.com/) .
 
 Die Vergütung erfolgt in folgenden Blöcken: 
 
-* 1. Block: 3 VP Stunden für die Baseline-Umfrage und mindestens 25 ESM-Umfragen
-* 2. Block: 3 VP Stunden (6 insgesamt) für 50 weitere ESM Umfragen (75 insgesamt) 
-* 3. Block: 3 VP Stunden (9 insgesamt), individuelles Feedback und die Gewinnchance auf einen 100-Euro Gutschein für 25 weitere Umfragen (100 ingesamt) sowie die Follow-up-Umfrage
+* 1. Block: 12 VP-Marken/3 VP-Stunden für die Baseline-Umfrage und mindestens 25 ESM-Umfragen
+* 2. Block: 12 VP-Marken/3 VP-Stunden (insgesamt 24 VP-Marken/6 VP-Stunden) für 50 weitere ESM Umfragen (75 insgesamt) 
+* 3. Block: 12 VP-Marken/3 VP-Stunden (insgesamt 36 VP-Marken/9 VP-Stunden), individuelles Feedback und die Gewinnchance auf einen 100-Euro Gutschein für 25 weitere Umfragen (100 ingesamt) sowie die Follow-up-Umfrage
