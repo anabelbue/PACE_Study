@@ -14,7 +14,6 @@ analyze_ESM <- function(dat, var, min_diff, max_diff) {
   )
   
   # Flag in which rows the time difference is out of bounds 
-  # Create a dataframe with test data
   dat <- dat %>%
     mutate(new_row_needed = ifelse(delta < min_diff | delta > max_diff, TRUE, FALSE))  
   
