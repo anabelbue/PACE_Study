@@ -34,10 +34,11 @@ analyze_ESM <- function(dat, var, min_diff, max_diff) {
   
   
   # Count the number of non-missing pars to get N
-  N <- dat %>%
-    filter(!is.na(var) & !is.na(var_lag)) %>%  # Filter for non-missing pairs
-    summarise(non_missing_pairs = n()) %>%            # Count the remaining valid pairs
-    pull()
+N <- dat %>%
+    mutate(var_lag = ifelse(delta < min_diff | delta > max_diff, NA, var_lag)) %>% 
+    filter(!is.na(var) & !is.na(var_lag)) %>% 
+    nrow()
+  
   
   
   # Analyze the data 
