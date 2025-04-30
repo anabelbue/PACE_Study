@@ -45,8 +45,9 @@ N <- dat %>%
   mod <- tryCatch({
   fit_2d_ld(dat, "var", lims = lims, n = N, na_action = "omit_vectors")
 }, error = function(e) {
-  return(NA)  # early exit from function with NA
+  NA  
 })
+  if (is.na(mod)) return(NA) # early exit from function with NA
   output <- summary(mod)
   
   # x entails the location of the attractor(s)
