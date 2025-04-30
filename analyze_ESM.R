@@ -42,7 +42,11 @@ N <- dat %>%
   
   # Analyze the data 
    lims <- range(dat$var, na.rm = TRUE)  # Calculate limits based on data range
-  mod <- fit_2d_ld(dat, "var", lims = lims, n = N, na_action = "omit_vectors")
+  mod <- tryCatch({
+  fit_2d_ld(dat, "var", lims = lims, n = N, na_action = "omit_vectors")
+}, error = function(e) {
+  return(NA)  # early exit from function with NA
+})
   output <- summary(mod)
   
   # x entails the location of the attractor(s)
