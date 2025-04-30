@@ -47,7 +47,7 @@ N <- dat %>%
 }, error = function(e) {
   NA  
 })
-  if (is.na(mod)) return(NA) # early exit from function with NA
+  if (is.atomic(mod) && length(mod) == 1 && is.na(mod)) return(NA) # early exit from function with NA
   output <- summary(mod)
   
   # x entails the location of the attractor(s)
