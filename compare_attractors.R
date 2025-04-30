@@ -1,10 +1,13 @@
 
 compare_attractors<- function(vec1, vec2) {
-  # Step 1: Split the character strings by commas
+  # Stop the function if model fitting of the ESM data failed 
+  if (is.na(vec2)) return(4)
+  
+  # Split the character strings by commas
   split_vec1 <- strsplit(vec1, ",")
   split_vec2 <- strsplit(vec2, ",")
   
-  # Step 2 & 3: Compare lengths and values
+  # Compare lengths and values
   comparison_results <- mapply(function(x, y) {
     len_x <- length(x)
     len_y <- length(y)
