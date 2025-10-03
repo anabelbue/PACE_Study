@@ -90,6 +90,10 @@ analyze_ESM_caom <- function(dat, var, min_diff, max_diff) {
         roots <- polyroot(coefs)
         real_roots <- Re(roots[abs(Im(roots)) < 1e-8])
         attractors <- real_roots[sapply(real_roots, function(r) fprime(r, coefs)) < 0]
+
+        # restrict attractors to observed range
+        valid_range <- range(dat$var, na.rm = TRUE)
+        attractors <- attractors[attractors >= valid_range[1] & attractors <= valid_range[2]]
         
         attractors_out <- if (length(attractors) == 0) {
           "Your data for this characteristic could not be successfully analyzed"
@@ -138,6 +142,9 @@ analyze_ESM_caom <- function(dat, var, min_diff, max_diff) {
       roots <- polyroot(coefs)
       real_roots <- Re(roots[abs(Im(roots)) < 1e-8])
       attractors <- real_roots[sapply(real_roots, function(r) fprime(r, coefs)) < 0]
+                                      
+      valid_range <- range(dat$var, na.rm = TRUE)
+      attractors <- attractors[attractors >= valid_range[1] & attractors <= valid_range[2]]
       
       attractors_out <- if (length(attractors) == 0) {
         "Your data for this characteristic could not be successfully analyzed"
