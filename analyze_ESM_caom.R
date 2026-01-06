@@ -145,9 +145,7 @@ analyze_ESM_caom <- function(dat, var, min_diff, max_diff) {
         fp <- fprime(r, coefs)
         fp > -2 & fp < 0
       })]
-                          
-      valid_range <- range(dat$var, na.rm = TRUE)
-      attractors <- attractors[attractors >= valid_range[1] & attractors <= valid_range[2]]
+                    
       
       attractors_out <- if (length(attractors) == 0) {
         "Your data for this characteristic could not be successfully analyzed"
