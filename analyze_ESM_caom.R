@@ -88,7 +88,7 @@ analyze_ESM_caom <- function(dat, var, min_diff, max_diff) {
         coefs <- coef(valid_models[[1]])
         
         roots <- polyroot(coefs)
-        real_roots <- Re(roots[abs(Im(roots)) < 1e-8])
+        real_roots <- Re(roots[abs(Im(roots)) < 1e-6])
         attractors <- real_roots[sapply(real_roots, function(r) fprime(r, coefs)) < 0]
 
         # restrict attractors to observed range
