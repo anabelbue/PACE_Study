@@ -96,7 +96,7 @@ analyze_ESM_caom_de <- function(dat, var, min_diff, max_diff) {
         attractors <- attractors[attractors >= valid_range[1] & attractors <= valid_range[2]]
         
         attractors_out <- if (length(attractors) == 0) {
-          "Your data for this characteristic could not be successfully analyzed"
+          "Ihre Daten für diese Eigenschaft konnten nicht erfolgreich ausgewertet werden."
         } else {
           paste(round(attractors), collapse = ",")
         }
@@ -147,7 +147,7 @@ analyze_ESM_caom_de <- function(dat, var, min_diff, max_diff) {
       attractors <- attractors[attractors >= valid_range[1] & attractors <= valid_range[2]]
       
       attractors_out <- if (length(attractors) == 0) {
-        "Your data for this characteristic could not be successfully analyzed"
+       "Ihre Daten für diese Eigenschaft konnten nicht erfolgreich ausgewertet werden."
       } else {
         paste(round(attractors), collapse = ",")
       }
