@@ -1,5 +1,5 @@
-# PACE_Study
-
-## Thank you for participating in the PACE Study!
-
-Once you're registered for the study, you will receive all required information about the study on the mail that you entered in the registration process. If you have any questions about the study, please reach out to the study team via [email](mailto:pace.study.ubc@gmail.com). Thank you!
+This repository contains the following files: 
+* Detailed codebooks for all three parts of the study
+* Supplementary Online Material (SOM) including information on the data collection periods, deviations from the preregistration, description of the pretest to select personality state items, descriptive statistics of the key constructs assessed in the ESM perdio, and detailed information on the data collection periods, and visualizations of interfaces of selected item formats
+* Additional materials, including the information provided before the start of the ESM part and the individualized feedback participants received at the end of the study
+* Functions used to analyze and feedback participants' their results during the study 
